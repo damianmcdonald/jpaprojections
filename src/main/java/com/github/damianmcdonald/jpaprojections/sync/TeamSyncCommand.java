@@ -31,5 +31,4 @@ public final class TeamSyncCommand extends SyncCommand {
             throw new RuntimeException(ex);
         }
     }
-
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class TeamDto {
 
-    private String name;
-    private String location;
+    private final String name;
+    private final String location;
     private List<PlayerDto> players;
 
     public TeamDto(final String name, final String location) {
@@ -17,16 +17,8 @@ public class TeamDto {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getLocation() {
         return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public List<PlayerDto> getPlayers() {
