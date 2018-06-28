@@ -46,7 +46,7 @@ alter table SALARY add constraint FK_PLAYER_ID foreign key (PLAYER_ID) reference
 alter table TEAM_COLOUR add constraint FK_TEAM_ID foreign key (TEAM_ID) references TEAM;
 ```
 
-Chnages to the entities are *intercepted* via [EntityChangeInterceptor](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/interceptor/EntityChangeInterceptor) which implemenets [EmptyInterceptor](https://docs.jboss.org/hibernate/orm/5.2/javadocs/org/hibernate/EmptyInterceptor.html).
+Chnages to the entities are *intercepted* via [EntityChangeInterceptor](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/interceptor/EntityChangeInterceptor.java) which implemenets [EmptyInterceptor](https://docs.jboss.org/hibernate/orm/5.2/javadocs/org/hibernate/EmptyInterceptor.html).
 
 It intercepts:
 
@@ -55,15 +55,15 @@ It intercepts:
 
 The [Observer design pattern](https://en.wikipedia.org/wiki/Observer_pattern) is used to watch and react to changes to the entities.
 
-* [SyncTrack](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/SyncTrack) is the [Observable](https://docs.oracle.com/javase/8/docs/api/java/util/Observable.html)
-* [SyncAction](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/SyncAction) is the [Observer](https://docs.oracle.com/javase/8/docs/api/java/util/Observer.html)
+* [SyncTrack](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/SyncTrack.java) is the [Observable](https://docs.oracle.com/javase/8/docs/api/java/util/Observable.html)
+* [SyncAction](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/SyncAction.java) is the [Observer](https://docs.oracle.com/javase/8/docs/api/java/util/Observer.html)
 
 The [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern) is used to provide a common syncing interface with entity specific implementations
 
-* [SyncCommand](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/SyncCommand) is an abstract class that defines generic command behaviour
-* [TeamSyncCommand](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/TeamSyncCommand) is an concrete command implementation that defines specific syncing behaviour for a ``Team`` entity.
+* [SyncCommand](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/SyncCommand.java) is an abstract class that defines generic command behaviour
+* [TeamSyncCommand](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/TeamSyncCommand.java) is an concrete command implementation that defines specific syncing behaviour for a ``Team`` entity.
 
-In the [TeamDao](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/dao/TeamDao) we don't want to retrieve a Persistence Context managed entity. Instead, we use a [DTO Projections](https://vladmihalcea.com/the-best-way-to-map-a-projection-query-to-a-dto-with-jpa-and-hibernate/) technique in order to obtain a subset of the `Team` entity which does not load unnecessary data and does not incur Persistence Context management overhead.
+In the [TeamDao](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/dao/TeamDao.java) we don't want to retrieve a Persistence Context managed entity. Instead, we use a [DTO Projections](https://vladmihalcea.com/the-best-way-to-map-a-projection-query-to-a-dto-with-jpa-and-hibernate/) technique in order to obtain a subset of the `Team` entity which does not load unnecessary data and does not incur Persistence Context management overhead.
 
 ```java
 public TeamDto getTeamProjection( int id ) {
@@ -117,7 +117,7 @@ cd my-project
 mvn clean package
 ```
 
-4) Run the [SimulateApp](https://github.com/damianmcdonald/jpaprojections/blob/master/src/test/java/com/github/damianmcdonald/jpaprojections/SimulateApp) test to verify behaviour:
+4) Run the [SimulateApp](https://github.com/damianmcdonald/jpaprojections/blob/master/src/test/java/com/github/damianmcdonald/jpaprojections/SimulateApp.java) test to verify behaviour:
 
 ```
 mvn -Dtest=SimulateApp test
