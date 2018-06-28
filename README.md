@@ -5,11 +5,11 @@ Overview
 -----------
 
 The JPA Projections example project is intended to demonstrate the following:
-* Use of a Hibernate Interceptor to detect entity changes in the Persistence Context
+* Use of a Hibernate Interceptor to detect entity changes in the ``Persistence Context``
 * Use of a Hibernate Interceptor to react to entity changes in the database
 * Use of Observer design pattern to watch and react to entity persistence changes
 * Use of the Command design pattern to provide a generic approach to syncing different entity types to an external source
-* Use of DTO Projections in order to obtain a non Persistence Context managed instance of an entity
+* Use of DTO Projections in order to obtain a non ``Persistence Context`` managed instance of an entity
 
 Scenario
 -----------
@@ -25,7 +25,7 @@ Constraints
 The JPA Projections example project assumes the following constraints:
 * Entities should adhere to the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle). The entities should not contain any business logic or decorator interfaces to track whether they need to be synced
 * The entities should avoid eagerly loading any of their associated collections
-* When syncing data to the external system, DTO Projections should be used rather then the entities themselves in order to create efficient and performant data retrieval queries and to remove the need for a managed Persistence Context
+* When syncing data to the external system, DTO Projections should be used rather then the entities themselves in order to create efficient and performant data retrieval queries and to remove the need for a managed ``Persistence Context``
 
 Walkthrough
 -----------
@@ -63,7 +63,7 @@ The [Command design pattern](https://en.wikipedia.org/wiki/Command_pattern) is u
 * [SyncCommand](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/SyncCommand.java) is an abstract class that defines generic command behaviour
 * [TeamSyncCommand](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/sync/TeamSyncCommand.java) is an concrete command implementation that defines specific syncing behaviour for a ``Team`` entity.
 
-In the [TeamDao](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/dao/TeamDao.java) we don't want to retrieve a Persistence Context managed entity. Instead, we use a [DTO Projections](https://vladmihalcea.com/the-best-way-to-map-a-projection-query-to-a-dto-with-jpa-and-hibernate/) technique in order to obtain a subset of the `Team` entity which does not load unnecessary data and does not incur Persistence Context management overhead.
+In the [TeamDao](https://github.com/damianmcdonald/jpaprojections/blob/master/src/main/java/com/github/damianmcdonald/jpaprojections/dao/TeamDao.java) we don't want to retrieve a ``Persistence Context`` managed entity. Instead, we use a [DTO Projections](https://vladmihalcea.com/the-best-way-to-map-a-projection-query-to-a-dto-with-jpa-and-hibernate/) technique in order to obtain a subset of the `Team` entity which does not load unnecessary data and does not incur ``Persistence Context`` management overhead.
 
 ```java
 public TeamDto getTeamProjection( int id ) {
@@ -91,8 +91,8 @@ Getting started
 
 The library was built using the following toolchain:
 
-* http://www.oracle.com/technetwork/java/javase/downloads/index.html[Java Oracle JDK 1.8]
-* https://maven.apache.org/download.cgi[Maven 3.2.3]
+* [Java Oracle JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [Maven 3.2.3](https://maven.apache.org/download.cgi)
 
 Your mileage may vary with versions different than the ones specified above.
 
@@ -117,8 +117,88 @@ cd my-project
 mvn clean package
 ```
 
-4) Run the [SimulateApp](https://github.com/damianmcdonald/jpaprojections/blob/master/src/test/java/com/github/damianmcdonald/jpaprojections/SimulateApp.java) test to verify behaviour:
+4) Run the [SimulateApp](https://github.com/damianmcdonald/jpaprojections/blob/master/src/test/java/com/github/damianmcdonald/jpaprojections/SimulateApp.java) to verify behaviour:
 
 ```
 mvn -Dtest=SimulateApp test
+```
+
+5) A successful output is shown below:
+
+```log
+Running com.github.damianmcdonald.jpaprojections.SimulateApp
+2018-06-28 16:17:45.200  INFO   --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: entity-jpa
+	...]
+2018-06-28 16:17:45.253  INFO   --- [           main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-06-28 16:17:45.254  INFO   --- [           main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-06-28 16:17:45.256  INFO   --- [           main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-06-28 16:17:45.285  INFO   --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-06-28 16:17:45.409  WARN   --- [           main] org.hibernate.orm.connections            : HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-06-28 16:17:45.411  INFO   --- [           main] org.hibernate.orm.connections            : HHH10001005: using driver [org.h2.Driver] at URL [jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1]
+2018-06-28 16:17:45.411  INFO   --- [           main] org.hibernate.orm.connections            : HHH10001001: Connection properties: {}
+2018-06-28 16:17:45.411  INFO   --- [           main] org.hibernate.orm.connections            : HHH10001003: Autocommit mode: false
+2018-06-28 16:17:45.413  INFO   --- [           main] .c.i.DriverManagerConnectionProviderImpl : HHH000115: Hibernate connection pool size: 20 (min=1)
+2018-06-28 16:17:45.514  INFO   --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2018-06-28 16:17:45.999  INFO   --- [           main] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000227: Running hbm2ddl schema export
+2018-06-28 16:17:46.021  INFO   --- [           main] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000476: Executing import script '/import.sql'
+2018-06-28 16:17:46.034  INFO   --- [           main] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000230: Schema export complete
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.interceptor.EntityChangeInterceptor onFlushDirty
+INFO: Entered method onFlushDirty.
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.interceptor.EntityChangeInterceptor onFlushDirty
+INFO: Entered method onFlushDirty.
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.interceptor.EntityChangeInterceptor postFlush
+INFO: Entered method postFlush.
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.sync.SyncAction update
+INFO: Entered update method
+2018-06-28 16:17:46.357  INFO   --- [           main] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.sync.TeamSyncCommand doSync
+INFO: Syncing TEAM entity {
+  "name" : "Eagles",
+  "location" : "New Jersey",
+  "players" : [ {
+    "firstName" : "Reggie",
+    "surname" : "White",
+    "position" : "Defensive End",
+    "rating" : 98,
+    "netSalary" : 43324,
+    "charitableContribution" : 7673565
+  }, {
+    "firstName" : "Chris",
+    "surname" : "Carter",
+    "position" : "Wide Receiver",
+    "rating" : 95,
+    "netSalary" : 75767,
+    "charitableContribution" : 4234
+  } ]
+}
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.sync.SyncAction update
+INFO: Entered update method
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.sync.TeamSyncCommand doSync
+INFO: Syncing TEAM entity {
+  "name" : "Cowboys",
+  "location" : "Austin",
+  "players" : [ {
+    "firstName" : "Emmitt",
+    "surname" : "Smith",
+    "position" : "Running Back",
+    "rating" : 95,
+    "netSalary" : 34869657,
+    "charitableContribution" : 765346
+  }, {
+    "firstName" : "Dieon",
+    "surname" : "Sanders",
+    "position" : "Cornerback",
+    "rating" : 99,
+    "netSalary" : 956732235,
+    "charitableContribution" : 2342435
+  } ]
+}
+Jun 28, 2018 4:17:46 PM com.github.damianmcdonald.jpaprojections.interceptor.EntityChangeInterceptor postFlush
+INFO: Entered method postFlush.
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.544 sec - in com.github.damianmcdonald.jpaprojections.SimulateApp
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 ```
