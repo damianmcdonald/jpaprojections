@@ -1,8 +1,12 @@
 package com.github.damianmcdonald.jpaprojections.model;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
 import javax.persistence.*;
 
 @Entity
+@Audited
 @Table(name = "PLAYER")
 public class Player {
 
@@ -30,6 +34,7 @@ public class Player {
     private int rating;
 
     @OneToOne(mappedBy = "player", fetch = FetchType.LAZY)
+    @NotAudited
     private Salary salary;
 
     public int getId() {

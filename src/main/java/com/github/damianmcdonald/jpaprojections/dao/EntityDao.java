@@ -1,13 +1,10 @@
 package com.github.damianmcdonald.jpaprojections.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public abstract class EntityDao<T1, T2> {
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("entity-jpa");
-    protected static EntityManager  entityManager = emf.createEntityManager();
+    private EntityManager entityManager = EntityManagerProvider.getInstance().getEntityManager();
     private Class< T1 > clazz1;
 
     public final void setClazz( Class< T1 > clazz1ToSet ){
@@ -25,5 +22,5 @@ public abstract class EntityDao<T1, T2> {
         return entity;
     }
 
-    public abstract T2 getTeamProjection( int id );
+    public abstract T2 getDtoProjection( int id );
 }

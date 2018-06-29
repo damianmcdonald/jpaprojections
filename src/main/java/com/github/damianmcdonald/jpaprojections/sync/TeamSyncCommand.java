@@ -24,7 +24,7 @@ public final class TeamSyncCommand extends SyncCommand {
         try {
             final String jsonOutput = new ObjectMapper()
                     .writerWithDefaultPrettyPrinter()
-                    .writeValueAsString((TeamDto) teamDao.getTeamProjection(getId()));
+                    .writeValueAsString((TeamDto) teamDao.getDtoProjection(getId()));
             LOGGER.info(String.format("Syncing TEAM entity %s", jsonOutput));
         } catch (Exception ex) {
             ex.printStackTrace();

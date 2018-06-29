@@ -36,9 +36,12 @@ public class EntityChangeInterceptor extends EmptyInterceptor {
     public void postFlush(java.util.Iterator entities) {
         LOGGER.log(Level.INFO, "Entered method postFlush.");
         entities.forEachRemaining(entity -> {
-            final Team team = (Team) entity;
-            final SyncCommand command = new TeamSyncCommand(team);
-            syncTrack.notify(command);
+            if (entity instanceof Team) {
+                final Team team = (Team) entity;
+                final SyncCommand command = new TeamSyncCommand(team);
+                syncTrack.notify(command);
+            }
         });
     }
+
 }

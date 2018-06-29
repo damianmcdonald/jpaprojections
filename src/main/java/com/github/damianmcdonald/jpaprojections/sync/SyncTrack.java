@@ -1,6 +1,5 @@
 package com.github.damianmcdonald.jpaprojections.sync;
 
-import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;

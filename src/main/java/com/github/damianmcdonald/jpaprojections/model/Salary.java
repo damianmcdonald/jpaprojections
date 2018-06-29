@@ -1,5 +1,7 @@
 package com.github.damianmcdonald.jpaprojections.model;
 
+import org.hibernate.envers.NotAudited;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Salary {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PLAYER_ID")
+    @NotAudited
     private Player player;
 
     @Column(name = "GROSS")

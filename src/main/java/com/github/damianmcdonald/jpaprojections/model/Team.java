@@ -1,9 +1,13 @@
 package com.github.damianmcdonald.jpaprojections.model;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Audited
 @Table(name = "TEAM")
 public class Team {
 
@@ -19,6 +23,7 @@ public class Team {
     private String location;
 
     @OneToMany(mappedBy = "team")
+    @NotAudited
     private List<TeamColour> teamColours;
 
     @OneToMany(mappedBy = "team")

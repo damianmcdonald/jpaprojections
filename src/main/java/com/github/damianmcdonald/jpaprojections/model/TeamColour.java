@@ -1,5 +1,7 @@
 package com.github.damianmcdonald.jpaprojections.model;
 
+import org.hibernate.envers.NotAudited;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class TeamColour {
             cascade = { CascadeType.PERSIST,
                     CascadeType.MERGE })
     @JoinColumn(name = "TEAM_ID")
+    @NotAudited
     private Team team;
 
     @Column(name = "NAME")
