@@ -23,6 +23,8 @@ import java.util.Set;
 @SpringBootTest
 public class SimulateApp {
 
+    private static final int REVISION_CURRENT = 0;
+    private static final int REVISION_PREVIOUS = 0;
     private static SyncTrack syncTrack;
     private static SyncAction syncAction;
     private static EntityDao teamDao;
@@ -59,8 +61,8 @@ public class SimulateApp {
         saveTeam(cowboys);
 
         // use Hibernate Envers to retreive the previous and current versions of the specific Team
-        final Team currentTeamRevision = getCurrentRevision(cowboys.getId());
-        final Team previousTeamRevision = getPreviousRevision(cowboys.getId());
+        final Team currentTeamRevision = getRevision(cowboys.getId(), REVISION_CURRENT);
+        final Team previousTeamRevision = getRevision(cowboys.getId(), REVISION_PREVIOUS);
 
         // determine what has changed between the previous and current versions of the cowboys Team entity
         diff(previousTeamRevision, currentTeamRevision)
@@ -81,15 +83,11 @@ public class SimulateApp {
         teamDao.update(team);
     }
 
-    private Team getCurrentRevision(final int id) {
-        return reader.find(Team.class, id, getCurrentRevisionId(id));
+    private Team getRevision(final int id, final int revision) {
+        return reader.find(Team.class, id, getRevisionId(id) - revision);
     }
 
-    private Team getPreviousRevision(final int id) {
-        return reader.find(Team.class, id, getCurrentRevisionId(id) - 1);
-    }
-
-    private int getCurrentRevisionId(final int id) {
+    private int getRevisionId(final int id) {
         return reader.getRevisions(Team.class, id).stream()
                 .sorted((f1, f2) -> Long.compare(f2.intValue(), f1.intValue()))
                 .findFirst().get().intValue();
