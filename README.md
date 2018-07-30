@@ -1,4 +1,4 @@
-JPA Projections Example
+JPA Projections ENVERS TEST Example
 ===================
 
 Overview
