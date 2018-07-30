@@ -1,4 +1,8 @@
 /target/
+<<<<<<< HEAD
 jpaprojections.iml
+=======
+hibernate-envers.iml
+>>>>>>> f1238c3fc5fd0e0cf7b2b3c98dac8552da674d4c
 /.idea/
 /.mvn/
