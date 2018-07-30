@@ -1,4 +1,4 @@
-JPA Projections Example TEST SYNCING
+JPA Projections Example TEST SYNCING OTHER
 ===================
 
 Overview
