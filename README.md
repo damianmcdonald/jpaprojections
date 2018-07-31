@@ -1,4 +1,4 @@
-JPA Projections Example - NO CHANGE TEST
+JPA Projections Example
 ===================
 
 Overview
