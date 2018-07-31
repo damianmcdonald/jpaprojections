@@ -1,4 +1,4 @@
-JPA Projections Example - MASTER SYNC
+JPA Projections Example
 ===================
 
 Overview
